@@ -40,6 +40,11 @@ It deletes containers, images, volumes, and networks that are not in use.
 5️⃣ Disk usage    ----------  df -h
 
 
+.............................
+Once inside: =======   mysql -u root -p
+............................
+
+
 
 fastapi-mysql-app/
 ├─ backend/
