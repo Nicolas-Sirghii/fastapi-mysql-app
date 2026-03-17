@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import mysql.connector
 from mysql.connector import Error
+from db import getConnection
+
 
 app = FastAPI()
 
@@ -15,12 +16,7 @@ app.add_middleware(
 
 def get_message():
     try:
-        connection = mysql.connector.connect(
-            host="db",
-            user="root",
-            password="example",
-            database="messages_db"
-        )
+        connection = getConnection()
         cursor = connection.cursor()
         cursor.execute("SELECT text FROM messages LIMIT 1;")
         result = cursor.fetchone()
@@ -32,6 +28,26 @@ def get_message():
             cursor.close()
             connection.close()
 
+
+def get_greeting():
+    try:
+        connection = getConnection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT text FROM gritings LIMIT 1;")
+        result = cursor.fetchone()
+        return result[0] if result else "No message"
+    except Error as e:
+        return f"Error: {e}"
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+
+
 @app.get("/message")
 def message():
     return {"message": get_message()}
+
+@app.get("/griting")
+def griting():
+    return {"griting": get_greeting()}
