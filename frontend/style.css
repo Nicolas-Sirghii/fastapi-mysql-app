@@ -1,0 +1,10 @@
+#sec{
+    color: green;
+    font-size: 30px;
+}
+#gre{
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgb(53, 110, 53);
+}
