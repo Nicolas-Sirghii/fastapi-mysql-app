@@ -2,18 +2,23 @@
 www.sirghiinicolai.com {
     redir https://sirghiinicolai.com{uri}
 }
-
-# Main site
-sirghiinicolai.com {
-    root * /usr/share/caddy
-    file_server
-
-    # Backend API: handle first
-    handle_path /api/* {
-        reverse_proxy backend:8000
-    }
-
-    # SPA fallback: everything else
-    try_files {path} /index.html
+www.sirghiinicolai.com {
+    redir https://sirghiinicolai.com{uri}
 }
 
+sirghiinicolai.com {
+    root * /usr/share/caddy
+
+    route {
+        # 1. API always first
+        handle_path /api/* {
+            reverse_proxy backend:8000
+        }
+
+        # 2. Everything else → React SPA
+        handle {
+            try_files {path} /index.html
+            file_server
+        }
+    }
+}
