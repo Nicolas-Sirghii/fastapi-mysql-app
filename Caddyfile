@@ -16,3 +16,4 @@ sirghiinicolai.com {
     # SPA fallback: everything else
     try_files {path} /index.html
 }
+
