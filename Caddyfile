@@ -1,4 +1,4 @@
-# Redirect www → root (optional but recommended)
+# Redirect www → root
 www.sirghiinicolai.com {
     redir https://sirghiinicolai.com{uri}
 }
@@ -8,11 +8,11 @@ sirghiinicolai.com {
     root * /usr/share/caddy
     file_server
 
-    # SPA fallback: if file not found, serve index.html
-    try_files {path} /index.html
-
-    # Backend API
+    # Backend API: handle first
     handle_path /api/* {
         reverse_proxy backend:8000
     }
+
+    # SPA fallback: everything else
+    try_files {path} /index.html
 }
