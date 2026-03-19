@@ -1,8 +1,18 @@
-sirghiinicolai.com, www.sirghiinicolai.com
+# Redirect www → root (optional but recommended)
+www.sirghiinicolai.com {
+    redir https://sirghiinicolai.com{uri}
+}
 
-root * /usr/share/caddy
-file_server
+# Main site
+sirghiinicolai.com {
+    root * /usr/share/caddy
+    file_server
 
-handle_path /api/* {
-    reverse_proxy backend:8000
+    # SPA fallback: if file not found, serve index.html
+    try_files {path} /index.html
+
+    # Backend API
+    handle_path /api/* {
+        reverse_proxy backend:8000
+    }
 }
