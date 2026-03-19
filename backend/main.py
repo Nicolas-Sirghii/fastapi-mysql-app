@@ -44,7 +44,7 @@ def get_greeting():
             connection.close()
 
 
-@app.get("/message")
+@app.get("/products")
 def message():
     return {"message": get_message()}
 

@@ -9,7 +9,7 @@ def getConnection():
         database="messages_db"
 
 
-        #
+
         # host="srv1590.hstgr.io",
         # user="u529719289_cloud_master",
         # password="myDBpass1$",
