@@ -51,3 +51,26 @@ def message():
 @app.get("/griting")
 def griting():
     return {"griting": get_greeting()}
+
+
+
+from pydantic import BaseModel
+
+class MessageUpdate(BaseModel):
+    text: str
+
+
+@app.post("/admin/message")
+def update_message(data: MessageUpdate):
+    try:
+        connection = getConnection()
+        cursor = connection.cursor()
+        cursor.execute("UPDATE messages SET text=%s WHERE id=1;", (data.text,))
+        connection.commit()
+        return {"status": "updated"}
+    except Error as e:
+        return {"error": str(e)}
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()

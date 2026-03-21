@@ -3,17 +3,31 @@ www.sirghiinicolai.com {
     redir https://sirghiinicolai.com{uri}
 }
 
-# Main site (ONLY root domain here)
+# MAIN SITE
 sirghiinicolai.com {
     root * /usr/share/caddy
 
     route {
-        # API first
         handle_path /api/* {
             reverse_proxy backend:8000
         }
 
-        # SPA fallback
+        handle {
+            try_files {path} /index.html
+            file_server
+        }
+    }
+}
+
+# ADMIN SUBDOMAIN
+admin33.sirghiinicolai.com {
+    root * /usr/share/caddy-admin
+
+    route {
+        handle_path /api/* {
+            reverse_proxy backend:8000
+        }
+
         handle {
             try_files {path} /index.html
             file_server

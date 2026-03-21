@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body>
+  <h1>Admin Panel</h1>
+
+  <input id="msg" placeholder="New message">
+  <button onclick="update()">Change message</button>
+
+  <script>
+    async function update() {
+      const text = document.getElementById("msg").value;
+
+      await fetch("/api/admin/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
+      });
+
+      alert("Updated!");
+    }
+  </script>
+</body>
+</html>
